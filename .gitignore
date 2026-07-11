@@ -220,3 +220,5 @@ __marimo__/
 vectorstore/
 *.pkl
 data/raw/*.csv
+archive/
+src/__init__.py
