@@ -1,6 +1,31 @@
 Here is the complete blueprint, merging the 3-day Machine Learning Development Life Cycle (MDLC) with the exact folder structure, file explanations, code snippets, and dataset links.
 
-Organizing a project like this is exactly what catches the eye of hackathon judges. It shows you understand modular software engineering, separating your data pipeline from your front-end logic, rather than stuffing everything into a single script.
+```
+fifa-ai-predictor/
+│
+├── data/
+│   ├── raw/                  # Downloaded Kaggle CSVs go here
+│   └── processed/            # Cleaned, merged CSVs go here
+│
+├── models/
+│   └── rf_classifier.pkl     # Your saved Random Forest model
+│
+├── context/
+│   └── team_news.csv         # A small, curated dataset of recent team form/news for RAG
+│
+├── notebooks/
+│   └── 01_data_prep.ipynb    # Jupyter notebook for testing Pandas logic safely
+│
+├── src/
+│   ├── data_processor.py     # Functions to clean data and engineer features
+│   ├── model_trainer.py      # Functions to train and export the ML model
+│   └── rag_engine.py         # Functions to embed and retrieve context
+│
+├── app.py                    # The main Streamlit dashboard
+├── requirements.txt          # Python dependencies
+└── .env                      # API keys (DO NOT commit to GitHub)
+```
+
 
 ### 🏷️ Repository Name Suggestions
 
@@ -18,8 +43,6 @@ Download these directly into your `data/raw/` folder.
 ---
 
 ### 🗓️ Day 1: Data Engineering (MDLC: Data Prep)
-
-When solving daily algorithmic problems in Java, you are likely used to writing `for` loops to iterate through arrays. In Python data science, you must shift your mindset to "vectorization"—applying operations to entire columns at once using Pandas.
 
 #### `notebooks/01_data_prep.ipynb`
 
