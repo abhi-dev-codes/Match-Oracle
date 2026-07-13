@@ -15,11 +15,13 @@ with col1:
 with col2:
     away_team = st.selectbox("Away team", teams, index=teams.index("Brazil") if "Brazil" in teams else 1)
 
+is_neutral = st.checkbox("Neutral Venue (e.g., World Cup match)", value=False)
+
 if st.button("Predict outcome", type="primary"):
     if home_team == away_team:
         st.error("Pick two different teams.")
     else:
-        probs = predict_outcome("models/classifier.pkl", rankings_df, home_team, away_team)
+        probs = predict_outcome("models/classifier.pkl", rankings_df, home_team, away_team, neutral=int(is_neutral))
 
         c1, c2, c3 = st.columns(3)
         c1.metric(f"{home_team} win", f"{probs['home_win']*100:.0f}%")
