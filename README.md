@@ -1,4 +1,4 @@
-# <div align="center"> ⚽ Match-Oracle </div>
+# <div align="center"> ⚽ Match Oracle </div>
  
 ### <div align="center"> AI-Powered Football Outcome Predictor & LangChain RAG Scout Report Generator </div>
 
