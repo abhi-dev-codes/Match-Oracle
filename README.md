@@ -8,7 +8,7 @@
 
 Match Oracle predicts international football match outcomes using a Logistic Regression model trained on 20+ years of FIFA ranking and match history data, then pairs that prediction with an AI-generated scouting report, built with a genuine **LangChain RAG pipeline** (FAISS vector search + prompt templates) instead of a bare API call. Pick two teams, get a win/draw/loss probability, and read a context-grounded tactical preview, all in one Streamlit page.
  
-## <div align="center"><img style="border: 2px solid #626262ad; padding: 8px 1px; border-radius: 12px;" height="495" width="420" src = "./public/preview.png" /></div>
+## <div align="center"><img style="border: 2px solid #626262ad; padding: 8px 1px; border-radius: 12px;" height="490" width="1440" src = "./public/preview.png" /></div>
 <!-- ![previewImg](./public/preview.png) -->
 
 ---
@@ -245,10 +245,17 @@ Match Oracle is an independent student project, not currently backed by any spon
  
 ---
  
-## License
+## License & Credit
  
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details. In short: free to use, modify, and distribute, with attribution appreciated.
+
+Background GIF: https://cdna.artstation.com/p/assets/images/images/075/142/478/original/aidan-yelamos-berbel-footballnight.gif?1713861751
+
+Background GIF Artist credit: https://www.artstation.com/aidanyelamos
  
 ---
+
  
-### <div align="center">Made with ❤️ using Python, Pandas, NumPy, scikit-learn, LangChain, FAISS, Streamlit & Groq by **Abhimanyu Kumar**, **Adrija Das**, and **Arpan Paul**</div>
+#### <div align="center">Made with ❤️ using Python, Pandas, NumPy, scikit-learn, LangChain, FAISS, Streamlit & Groq by **Abhimanyu Kumar**, **Adrija Das**, and **Arpan Paul**</div>
+
+

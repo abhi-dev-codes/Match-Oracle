@@ -12,6 +12,9 @@ st.markdown("""
 .block-container {
     padding-top: 1.5rem !important;
     padding-bottom: 1.5rem !important;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
 }
 .match-header {
     display: flex;
@@ -106,12 +109,34 @@ st.markdown("""
     font-weight: 900;
     font-size: 1.8rem;
     text-transform: uppercase;
-    font-family: 'Impact', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     margin-bottom: 15px;
     color: #f1f3f4;
 }
 </style>
 """, unsafe_allow_html=True)
+
+import base64
+
+def set_bg_gif(gif_path):
+    with open(gif_path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
+        
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/gif;base64,{encoded_string}");
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+set_bg_gif("public/aidan-yelamos-berbel-footballnight.gif")
 
 st.title("⚽ Match Oracle")
 
