@@ -2,20 +2,15 @@
  
 ### <div align="center"> AI-Powered Football Outcome Predictor & LangChain RAG Scout Report Generator </div>
 
-
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
-![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
-![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)
-![FAISS](https://img.shields.io/badge/FAISS-00599C?style=for-the-badge&logo=meta&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
-![Groq](https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logo=groq&logoColor=white)
-![Gemini](https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white) 
-
-Match Oracle predicts international football match outcomes using a Logistic Regression model trained on 20+ years of FIFA ranking and match history data, then pairs that prediction with an AI-generated scouting report — built with a genuine **LangChain RAG pipeline** (FAISS vector search + prompt templates) instead of a bare API call. Pick two teams, get a win/draw/loss probability, and read a context-grounded tactical preview, all in one Streamlit page.
+## <div align="center">![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white) ![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white) ![FAISS](https://img.shields.io/badge/FAISS-00599C?style=for-the-badge&logo=meta&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white) ![Groq](https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logo=groq&logoColor=white) ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white) ![Pycountry](https://img.shields.io/badge/Pycountry-3776AB?style=for-the-badge&logo=python&logoColor=white) ![FlagCDN](https://img.shields.io/badge/FlagCDN-000000?style=for-the-badge&logo=cdn&logoColor=white) </div>
+<!-- ![Gemini](https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white) -->
  
+
+Match Oracle predicts international football match outcomes using a Logistic Regression model trained on 20+ years of FIFA ranking and match history data, then pairs that prediction with an AI-generated scouting report, built with a genuine **LangChain RAG pipeline** (FAISS vector search + prompt templates) instead of a bare API call. Pick two teams, get a win/draw/loss probability, and read a context-grounded tactical preview, all in one Streamlit page.
+ 
+## <div align="center"><img style="border: 2px solid #626262ad; padding: 8px 1px; border-radius: 12px;" height="490" width="1440" src = "./public/preview.png" /></div>
+<!-- ![previewImg](./public/preview.png) -->
+
 ---
  
 ## Table of Contents
@@ -35,12 +30,12 @@ Match Oracle predicts international football match outcomes using a Logistic Reg
  
 ## Features
  
-- 🔮 **Match outcome prediction** — Logistic Regression classifier trained on 23,000+ international matches (2000–2024), predicting home win / draw / away win probabilities from FIFA rank difference and venue neutrality.
-- 🤖 **AI scout reports** — a real LangChain RAG chain (not a raw prompt string) retrieves each team's current form from a curated knowledge base and generates a grounded, 3-sentence tactical preview.
-- 📊 **Feature-scaled model** — inputs are standardized with `StandardScaler` so the model weighs rank difference on equal footing with categorical features, instead of one feature silently drowning out the other.
-- 🌍 **Team-name reconciliation** — a mapping layer resolves spelling mismatches between the two source datasets (e.g. `Iran` ↔ `IR Iran`, `USA` ↔ `United States`) so real matches aren't silently dropped during the merge.
-- 🖥️ **One-page Streamlit UI** — team dropdowns, live probability metrics, and an AI-generated report, no page reloads or extra tabs.
-- 🔌 **Swappable LLM backend** — the RAG chain works identically with Google Gemini or Groq (Llama) behind a single `PROMPT | llm` LangChain expression, so switching providers is a two-line change.
+- 🔮 **Match outcome prediction**: Logistic Regression classifier trained on 23,000+ international matches (2000–2024), predicting home win / draw / away win probabilities from FIFA rank difference and venue neutrality.
+- 🤖 **AI scout reports**: a real LangChain RAG chain (not a raw prompt string) retrieves each team's current form from a curated knowledge base and generates a grounded, 3-sentence tactical preview.
+- 📊 **Feature-scaled model**: inputs are standardized with `StandardScaler` so the model weighs rank difference on equal footing with categorical features, instead of one feature silently drowning out the other.
+- 🌍 **Team-name reconciliation**: a mapping layer resolves spelling mismatches between the two source datasets (e.g. `Iran` ↔ `IR Iran`, `USA` ↔ `United States`) so real matches aren't silently dropped during the merge.
+- 🖥️ **One-page Streamlit UI**: team dropdowns, live probability metrics, and an AI-generated report, no page reloads or extra tabs.
+- 🔌 **Swappable LLM backend**: the RAG chain works identically with Google Gemini or Groq (Llama) behind a single `PROMPT | llm` LangChain expression, so switching providers is a two-line change.
 ---
  
 ## Tech Stack
@@ -86,13 +81,13 @@ flowchart TD
  
 ```
 match-oracle/
-├── .env                          # API keys (GEMINI_API_KEY / GROQ_API_KEY) — never committed
+├── .env                          # API keys (GROQ_API_KEY) 
 ├── .gitignore
 ├── .streamlit/
 │   └── config.toml               # File watcher config (avoids transformers/torchvision import noise)
 ├── requirements.txt
 ├── README.md
-├── app.py                        # Streamlit entrypoint — the only file touching the UI
+├── app.py                        # Streamlit entrypoint: the only file touching the UI
 ├── data/
 │   ├── raw/
 │   │   ├── results.csv           # International match history (Kaggle)
@@ -100,20 +95,20 @@ match-oracle/
 │   └── processed/
 │       └── training_data.csv     # Cleaned, merged, feature-engineered output
 ├── context/
-│   └── team_news.csv             # Hand-curated "live" team form — the RAG knowledge base
+│   └── team_news.csv             # Hand-curated "live" team form: the RAG knowledge base
 ├── vectorstore/
 │   └── team_news_index/          # FAISS index, built once from team_news.csv, loaded at runtime
 ├── models/
 │   ├── classifier.pkl            # Trained Logistic Regression model
 │   └── scaler.pkl                # Fitted StandardScaler (must accompany the model)
 ├── notebooks/
-│   └── 01_eda_and_prep.ipynb     # EDA scratchpad — class balance, rank_diff distribution checks
+│   └── 01_eda_and_prep.ipynb     # EDA scratchpad: class balance, rank_diff distribution checks
 └── src/
     ├── __init__.py
     ├── data_processor.py         # CSV cleaning, team-name mapping, merge_asof, feature engineering
     ├── model_trainer.py          # Train/test split, scaling, Logistic Regression, evaluation
     ├── rag_engine.py             # FAISS vector store, prompt template, LangChain LLM chain
-    └── predictor.py              # Rank lookup + scaled prediction — the glue app.py calls into
+    └── predictor.py              # Rank lookup + scaled prediction: the glue app.py calls into
 ```
  
 ---
@@ -123,7 +118,7 @@ match-oracle/
 ### Prerequisites
 - Python 3.11+ (or your installed version — see note on compatibility below)
 - Git
-- A free [Google Gemini API key](https://aistudio.google.com/apikey) or [Groq API key](https://console.groq.com/keys)
+- A free [Groq API key](https://console.groq.com/keys)
 - Kaggle account (to download the two datasets)
 ### Installation
  
@@ -234,7 +229,7 @@ sequenceDiagram
  
 ---
  
-## Known Issues & Lessons Learned
+<!-- ## Known Issues & Lessons Learned
  
 Documenting this because working through it was most of the actual engineering effort:
  
@@ -242,22 +237,25 @@ Documenting this because working through it was most of the actual engineering e
 - **Unscaled features skewing the model (fixed):** `rank_diff` (range ≈ ±200) and `neutral_venue` (0 or 1) were fed into Logistic Regression without scaling, so the model's coefficients compensated by nearly ignoring `rank_diff` entirely. Fixed by fitting a `StandardScaler` on the training features and persisting it alongside the model.
 - **Draw prediction remains weak:** with only two features, the model rarely predicts draws — a well-known hard case in football analytics, since draws don't correlate as cleanly with rank gap as decisive wins do. Planned improvement: add recent-form or head-to-head features.
 - **Live model deprecation mid-build:** `gemini-1.5-flash` and later `gemini-2.5-flash-lite` were both retired by Google during development, requiring a mid-project provider swap — handled cleanly thanks to LangChain's provider-agnostic `PROMPT | llm` interface.
----
+--- -->
  
 ## Sponsor
  
-Match Oracle is an independent student project, not currently backed by any sponsor. If this project helped you learn something or you'd like to support future development, a star ⭐ on the repo goes a long way — and if you're a company interested in sponsoring student open-source work, feel free to reach out via the repo's Issues tab.
+Match Oracle is an independent student project, not currently backed by any sponsor. If this project helped you learn something or you'd like to support future development, a star ⭐ on the repo goes a long way.
  
 ---
  
-## License
+## License & Credit
  
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details. In short: free to use, modify, and distribute, with attribution appreciated.
+
+Background GIF: https://cdna.artstation.com/p/assets/images/images/075/142/478/original/aidan-yelamos-berbel-footballnight.gif?1713861751
+
+Background GIF Artist credit: https://www.artstation.com/aidanyelamos
  
 ---
+
  
-<div align="center">
-Made with ❤️ using Python, Pandas, NumPy, scikit-learn, LangChain, FAISS, Streamlit, Gemini & Groq
-by **Abhimanyu Kumar**, **Adrija Das**, and **Arpan Paul**
- 
-</div>
+#### <div align="center">Made with ❤️ using Python, Pandas, NumPy, scikit-learn, LangChain, FAISS, Streamlit & Groq by **Abhimanyu Kumar**, **Adrija Das**, and **Arpan Paul**</div>
+
+

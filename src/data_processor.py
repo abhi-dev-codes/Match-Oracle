@@ -33,23 +33,36 @@ def load_and_merge(matches_path, rankings_path):
     rankings = rankings.sort_values("rank_date")
     matches = matches.sort_values("date").reset_index(drop=True)
 
-    home_ranks = pd.merge_asof(
-        matches, rankings.rename(columns={"country_full": "home_team", "rank": "home_rank"}),
-        left_on="date", right_on="rank_date", by="home_team", direction="backward"
-    )[["home_rank"]]
+    home_stats = pd.merge_asof(
+    matches,
+    rankings.rename(columns={
+        "country_full": "home_team",
+        "rank": "home_rank",
+        "total_points": "home_points",   # NEW — carry points through the same merge
+    }),
+    left_on="date", right_on="rank_date", by="home_team", direction="backward"
+    )[["home_rank", "home_points"]]
 
-    away_ranks = pd.merge_asof(
-        matches, rankings.rename(columns={"country_full": "away_team", "rank": "away_rank"}),
+    away_stats = pd.merge_asof(
+        matches,
+        rankings.rename(columns={
+            "country_full": "away_team",
+            "rank": "away_rank",
+            "total_points": "away_points",
+        }),
         left_on="date", right_on="rank_date", by="away_team", direction="backward"
-    )[["away_rank"]]
+    )[["away_rank", "away_points"]]
 
-    matches["home_rank"] = home_ranks["home_rank"]
-    matches["away_rank"] = away_ranks["away_rank"]
-    return matches.dropna(subset=["home_rank", "away_rank"])
+    matches["home_rank"] = home_stats["home_rank"]
+    matches["home_points"] = home_stats["home_points"]
+    matches["away_rank"] = away_stats["away_rank"]
+    matches["away_points"] = away_stats["away_points"]
+    return matches.dropna(subset=["home_rank", "away_rank", "home_points", "away_points"])
 
 
 def engineer_features(df):
     df["rank_diff"] = df["away_rank"] - df["home_rank"]
+    df["points_diff"] = df["home_points"] - df["away_points"]
     df["neutral_venue"] = df["neutral"].astype(int)
 
     def outcome(row):
@@ -60,7 +73,7 @@ def engineer_features(df):
         return 0       # away win
 
     df["outcome"] = df.apply(outcome, axis=1)
-    return df[["home_team", "away_team", "rank_diff", "neutral_venue", "outcome"]]
+    return df[["home_team", "away_team", "rank_diff", "points_diff", "neutral_venue", "outcome"]]
 
 
 def process_football_data(matches_path, rankings_path, output_path):
