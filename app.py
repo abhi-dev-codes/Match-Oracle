@@ -235,3 +235,54 @@ if st.button("Predict outcome", type="primary"):
             <div style="font-size: 1.05rem; line-height: 1.6; color: #e8eaed;">{report}</div>
         </div>
         """, unsafe_allow_html=True)
+
+# 4. FLOATING BUTTONS
+def get_base64_image(image_path):
+    with open(image_path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+try:
+    github_svg = get_base64_image("public/github.svg")
+    gif_svg = get_base64_image("public/filetype-gif.svg")
+
+    st.markdown(f"""
+    <style>
+    .floating-buttons {{
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        gap: 15px;
+        z-index: 9999;
+    }}
+    .floating-btn {{
+        width: 45px;
+        height: 45px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        transition: transform 0.2s, background-color 0.2s;
+    }}
+    .floating-btn:hover {{
+        transform: scale(1.1);
+        background-color: white;
+    }}
+    .floating-btn img {{
+        width: 24px;
+        height: 24px;
+    }}
+    </style>
+    <div class="floating-buttons">
+        <a href="https://github.com/abhi-dev-codes/Match-Oracle" target="_blank" class="floating-btn" title="GitHub Repository">
+            <img src="data:image/svg+xml;base64,{github_svg}" alt="GitHub">
+        </a>
+        <a href="https://cdna.artstation.com/p/assets/images/images/075/142/478/original/aidan-yelamos-berbel-footballnight.gif?1713861751" target="_blank" class="floating-btn" title="Background GIF Source">
+            <img src="data:image/svg+xml;base64,{gif_svg}" alt="GIF Source">
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
+except Exception as e:
+    pass
