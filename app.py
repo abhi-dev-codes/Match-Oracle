@@ -109,7 +109,7 @@ st.markdown("""
     font-weight: 900;
     font-size: 1.8rem;
     text-transform: uppercase;
-    font-family: 'Impact', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     margin-bottom: 15px;
     color: #f1f3f4;
 }

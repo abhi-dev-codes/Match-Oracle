@@ -8,7 +8,7 @@
 
 Match Oracle predicts international football match outcomes using a Logistic Regression model trained on 20+ years of FIFA ranking and match history data, then pairs that prediction with an AI-generated scouting report, built with a genuine **LangChain RAG pipeline** (FAISS vector search + prompt templates) instead of a bare API call. Pick two teams, get a win/draw/loss probability, and read a context-grounded tactical preview, all in one Streamlit page.
  
-## <div align="center"><img style="border: 2px solid #626262ad; padding: 8px 1px; border-radius: 12px;" height="500" width="1440" src = "./public/preview.png" /></div>
+## <div align="center"><img style="border: 2px solid #626262ad; padding: 8px 1px; border-radius: 12px;" height="490" width="1440" src = "./public/preview.png" /></div>
 <!-- ![previewImg](./public/preview.png) -->
 
 ---
