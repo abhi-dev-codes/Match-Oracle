@@ -149,9 +149,9 @@ teams = sorted(rankings_df["country_full"].unique())
 
 # Initialize session state for swapping
 if "home_team" not in st.session_state:
-    st.session_state["home_team"] = "France"
+    st.session_state["home_team"] = "Argentina"
 if "away_team" not in st.session_state:
-    st.session_state["away_team"] = "Spain"
+    st.session_state["away_team"] = "England"
 
 def swap_teams():
     st.session_state["home_team"], st.session_state["away_team"] = (
@@ -285,4 +285,4 @@ try:
     </div>
     """, unsafe_allow_html=True)
 except Exception as e:
-    pass
+    pass

@@ -28,22 +28,47 @@ def load_vectorstore():
         return build_vectorstore()
     return FAISS.load_local(VECTORSTORE_PATH, EMBEDDINGS, allow_dangerous_deserialization=True)
 
-PROMPT = ChatPromptTemplate.from_template(
-    """You are an expert football scout. {home_team} is playing {away_team}.
-Our model gives {home_team} a {win_prob}% chance of winning.
+# PROMPT = ChatPromptTemplate.from_template(
+#     """You are an expert football news reporter. {home_team} is playing {away_team}.
+# Our model gives {home_team} a {win_prob}% chance of winning.
 
-Retrieved context:
+# Retrieved context:
+# {context}
+
+# Write a punchy, trendy 3-sentence tactical preview based strictly on this context and probability.
+# Justify the probability.
+# Do not invent facts that aren't in the context."""
+# )
+PROMPT = ChatPromptTemplate.from_template(
+    """You are a sharp, concise football commentator with experience in match-analysis. {home_team} is playing {away_team}.
+Our statistical model gives {home_team} a {win_prob}% chance of winning.
+
+Retrieved context (pre-labeled by team):
 {context}
 
-Write a punchy, 3-sentence tactical preview based strictly on this context and probability.
+Write a punchy 3-sentence tactical preview based strictly on this context.
+Note whether the context reinforces or complicates the model's probability — don't invent a causal justification for the number itself.
+If the context is too thin to support a claim, say so plainly instead of speculating.
 Do not invent facts that aren't in the context."""
 )
 
 llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0.4)
 
 def generate_scout_report(home_team, away_team, win_prob):
+    # Dynamically update news for the selected teams
+    import subprocess
+    import shutil
+    try:
+        subprocess.run(["python", "update_news.py", home_team, away_team], check=True)
+    except Exception as e:
+        print(f"Failed to update news: {e}")
+
+    # Force rebuild vectorstore since CSV has changed
+    if os.path.exists(VECTORSTORE_PATH):
+        shutil.rmtree(VECTORSTORE_PATH)
+
     store = load_vectorstore()
-    retriever = store.as_retriever(search_kwargs={"k": 4})
+    retriever = store.as_retriever(search_kwargs={"k": 2})
 
     hits = retriever.invoke(f"{home_team} {away_team} recent form")
     context = "\n".join(f"- {d.metadata['team']}: {d.page_content}" for d in hits)
