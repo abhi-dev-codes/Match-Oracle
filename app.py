@@ -208,7 +208,24 @@ if st.button("Predict outcome", type="primary"):
         if total != 100:
             a_prob += (100 - total)
 
-        # 2. WIN PROBABILITY BAR HTML
+        # 2. AI SCOUT REPORT & LLM ADJUSTED PROBABILITIES
+        with st.spinner("Analyzing recent form and adjusting probabilities..."):
+            result_dict = generate_scout_report(home, away, h_prob, d_prob, a_prob, is_neutral)
+            
+            try:
+                h_prob = int(result_dict.get("adjusted_home_win", h_prob))
+                d_prob = int(result_dict.get("adjusted_draw", d_prob))
+                a_prob = int(result_dict.get("adjusted_away_win", a_prob))
+                report = result_dict.get("tactical_preview", "Report unavailable.")
+                
+                # Normalize just in case LLM math is off
+                total_adj = h_prob + d_prob + a_prob
+                if total_adj != 100:
+                    a_prob += (100 - total_adj)
+            except Exception as e:
+                report = f"Failed to parse LLM adjustment: {e}"
+
+        # 3. WIN PROBABILITY BAR HTML
         st.markdown(f"""
         <div class="prob-card">
             <div class="prob-title">WIN PROBABILITY (90 MIN)</div>
@@ -224,10 +241,6 @@ if st.button("Predict outcome", type="primary"):
             </div>
         </div>
         """, unsafe_allow_html=True)
-
-        # 3. AI SCOUT REPORT (replaces video thumbnails)
-        with st.spinner("Analyzing recent form for scout report..."):
-            report = generate_scout_report(home, away, h_prob)
 
         st.markdown(f"""
         <div class="scout-card">
