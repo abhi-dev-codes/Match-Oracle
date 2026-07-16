@@ -2,10 +2,10 @@
  
 ### <div align="center"> A Hybrid ML + Generative AI Pipeline for Context-Aware Predictions </div>
 
-## <div align="center">![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white) ![Groq](https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logo=groq&logoColor=white) ![Llama 3](https://img.shields.io/badge/Llama_3-0466C8?style=for-the-badge&logo=meta&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white) ![FAISS](https://img.shields.io/badge/FAISS-00599C?style=for-the-badge&logo=meta&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)</div>
+## <div align="center">![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white) ![Gemini](https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white) ![Groq](https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logo=groq&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white) ![FAISS](https://img.shields.io/badge/FAISS-00599C?style=for-the-badge&logo=meta&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)</div>
  
 
-Match-Oracle is an advanced international football outcome predictor that bridges the gap between **Classical Machine Learning** and **Generative AI**. It uses a Logistic Regression model trained on 20+ years of FIFA data to establish baseline win/loss probabilities. Then, a dynamic **LangChain RAG (Retrieval-Augmented Generation) Pipeline** fetches real-time team news, embeds it using HuggingFace, and utilizes a **Groq Llama-3 LLM** as a reasoning agent to synthetically adjust those probabilities and generate a tactical preview.
+Match-Oracle is an advanced international football outcome predictor that bridges the gap between **Classical Machine Learning** and **Generative AI**. It uses a Logistic Regression model trained on 20+ years of FIFA data to establish baseline win/loss probabilities based on team forms and Head-to-Head (H2H) statistics. Then, a dynamic **LangChain RAG (Retrieval-Augmented Generation) Pipeline** fetches real-time team news, embeds it using HuggingFace, and utilizes **Google Gemini 3.5 Flash** (with a Groq Llama-3.3 fallback) as a reasoning agent to synthetically adjust those probabilities and generate a tactical preview.
 
 This repository serves as a comprehensive case study in **Prompt Engineering, Structured LLM Outputs, and Dynamic RAG architectures**, making it an ideal reference for Generative AI and Prompt Engineering applications.
  
@@ -98,7 +98,7 @@ flowchart TD
         E["Live News Fetch (Google RSS)"]
         F["FAISS Vector Index Build/Search"]
         G["LangChain Prompt Engine<br/>(Inject Context & Base Probs)"]
-        H["Groq LLM (Llama 3.3 70b)"]
+        H["Gemini 3.5 Flash<br/>(w/ Groq Fallback)"]
         I["JSON Output Parser<br/>(Extract Adjusted Probs & Text)"]
     end
 
@@ -119,11 +119,11 @@ flowchart TD
  
 ## Features
  
-- 🤖 **LLM-Driven Probability Adjustment**: Uses Llama 3 to read live news, reason about injuries or form, and mathematically adjust base predictions (via strict JSON output).
+- 🤖 **LLM-Driven Probability Adjustment**: Uses Gemini 3.5 Flash to read live news, reason about injuries or form, and mathematically adjust base predictions (via strict JSON output).
 - 📰 **Live Context Scraping**: Automatically fetches real-time team news via RSS prior to prediction, ensuring the LLM reasons on today's data, eliminating training-cutoff hallucinations.
-- 🔮 **Classical ML Foundation**: A Logistic Regression classifier trained on 23,000+ matches (2000–2024), utilizing standardized feature scaling.
+- 🔮 **Classical ML Foundation**: A Logistic Regression classifier trained on 23,000+ matches (2000–2024), utilizing standardized feature scaling and complex Head-to-Head (H2H) calculations.
 - 🌍 **Dynamic UI & Assets**: One-page Streamlit app featuring animated backgrounds, dynamic probability progress bars, and real-time team flag rendering via `pycountry` and the FlagCDN API.
-- ⚡ **Ultra-Fast Inference**: Uses Groq's LPU architecture to run the heavy `llama-3.3-70b-versatile` model at lightning speeds.
+- ⚡ **Resilient Agentic Architecture**: Uses **Google Gemini 3.5 Flash** for rapid, accurate structured output, with **Groq (Llama-3.3-70b)** automatically kicking in as a high-speed fallback if rate limits are hit.
 
 ---
  
@@ -131,7 +131,8 @@ flowchart TD
  
 | Layer | Technology | Purpose |
 |---|---|---|
-| **LLM Provider** | **Groq (Llama-3.3-70b)** | High-speed, powerful reasoning engine for JSON generation |
+| **LLM Provider (Primary)** | **Google Gemini (3.5 Flash)** | Advanced instruction-following and strict JSON output |
+| **LLM Provider (Fallback)**| **Groq (Llama-3.3-70b)** | High-speed backup reasoning engine |
 | **LLM Orchestration** | **LangChain** | Wires retrievers, prompt templates, and JSON parsers |
 | **Data Scraping** | **urllib / XML ET** | Real-time querying of Google News RSS feeds |
 | **Vector Store & Embeddings**| **FAISS & HuggingFace** | In-memory similarity search over scraped live news |
@@ -145,7 +146,8 @@ flowchart TD
  
 ### Prerequisites
 - Python 3.11+
-- A free [Groq API key](https://console.groq.com/keys)
+- A free [Google AI Studio API Key](https://aistudio.google.com/apikey)
+- A free [Groq API key](https://console.groq.com/keys) (optional fallback)
  
 ### Installation
  
@@ -163,7 +165,8 @@ env\Scripts\activate           # Windows PowerShell
 pip install -r requirements.txt
  
 # 4. Set up your .env file
-echo "GROQ_API_KEY=your_groq_key_here" > .env
+echo "GOOGLE_API_KEY=your_gemini_key_here" > .env
+echo "GROQ_API_KEY=your_groq_key_here" >> .env
 
 # 5. Launch the app (Model is pre-trained in /models)
 streamlit run app.py
@@ -199,7 +202,7 @@ match-oracle/
 2. **ML Prediction**: `app.py` calls `predictor.py`, which loads the serialized `classifier.pkl` and calculates baseline win/draw/loss probabilities based on historical FIFA points.
 3. **Live Data Fetch**: `app.py` calls `rag_engine.py`, which triggers `update_news.py`. This script hits Google News RSS, scrapes the latest 5 headlines for both teams based on injury/form keywords, and saves them to `context/team_news.csv`.
 4. **Vector Retrieval**: The FAISS index is instantly rebuilt with the fresh news, and the top relevant snippets are retrieved.
-5. **LLM Reasoning**: LangChain passes the structured prompt (containing the base probabilities, the prompt constraints, and the live context) to Groq (Llama-3).
+5. **LLM Reasoning**: LangChain passes the structured prompt (containing the base probabilities, the prompt constraints, and the live context) to Gemini 3.5 Flash (or Groq if rate-limited).
 6. **JSON Parsing & UI Update**: The LLM returns a structured JSON payload containing the dynamically adjusted probabilities and a narrative text. The UI updates the progress bars to reflect the AI's final verdict.
 
 ---
@@ -212,4 +215,4 @@ Background GIF Artist credit: [Aidan Yelamos](https://www.artstation.com/aidanye
  
 ---
 
-#### <div align="center">Made with ❤️ using Python, LangChain, Groq & Streamlit by **Abhimanyu Kumar**, **Adrija Das**, **Arpan Paul** and  **Anasuya Chatterjee**</div>
+#### <div align="center">Made with ❤️ using Python, LangChain, Gemini, Groq & Streamlit by **Abhimanyu Kumar**, **Adrija Das**, **Arpan Paul** and  **Anasuya Chatterjee**</div>
