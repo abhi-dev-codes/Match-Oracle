@@ -41,30 +41,24 @@ def load_vectorstore():
 # Do not invent facts that aren't in the context."""
 # )
 PROMPT = ChatPromptTemplate.from_template(
-    """You are a sharp, concise football commentator and data analyst. 
-{home_team} is playing {away_team}.
-Venue: {venue_status}
+    """You are a football match analyst. {home_team} vs {away_team}. Venue: {venue_status}.
 
-Our statistical model gives the following base probabilities:
-- {home_team} Win: {base_home_prob}%
-- Draw: {base_draw_prob}%
-- {away_team} Win: {base_away_prob}%
+Base probabilities: {home_team} {base_home_prob}% | Draw {base_draw_prob}% | {away_team} {base_away_prob}%
 
-Retrieved context (pre-labeled by team):
+News headlines:
 {context}
 
-INSTRUCTIONS:
-1. Read the context to see if there are major injuries, morale issues, or exceptional form.
-2. Adjust the base probabilities based on this news. Limit adjustments to a maximum of +/- 10% from the base. The final probabilities MUST sum exactly to 100.
-3. Write a punchy 3-sentence tactical preview based strictly on this context. Note how the news shifted the odds.
+RULES:
+- Only adjust probabilities (up to +/-10%) for CONFIRMED current injuries, suspensions, or lineup changes. Everything else: keep base probabilities unchanged.
+- Write exactly 3 sentences. Be specific — name players and cite the headline. Do NOT contradict yourself.
+- If one headline says "no injuries" and another says "player X is injured", pick the more specific one (the named player) and go with that.
+- Do NOT write generic filler. No "closely contested", no "poised to be", no "looking to capitalize".
 
-You MUST respond ONLY with a valid JSON object matching this schema:
-{{
-    "adjusted_home_win": 60,
-    "adjusted_draw": 20,
-    "adjusted_away_win": 20,
-    "tactical_preview": "String here..."
-}}
+EXAMPLE of good output:
+{{"adjusted_home_win": 42, "adjusted_draw": 28, "adjusted_away_win": 30, "tactical_preview": "England's Jordan Henderson is ruled out after a celebration injury, leaving a gap in midfield that Jack Rice may need to fill. Argentina report no new fitness concerns heading into the semi-final. With England missing a key midfielder, the odds tilt slightly toward Argentina."}}
+
+Now write yours. Respond ONLY with JSON:
+{{"adjusted_home_win": 0, "adjusted_draw": 0, "adjusted_away_win": 0, "tactical_preview": "..."}}
 """
 )
 
