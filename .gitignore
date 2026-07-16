@@ -24,8 +24,18 @@ htmlcov/
 # Project-specific
 .streamlit/secrets.toml
 vectorstore/
+
+# Ignore processed training data (can be regenerated)
+data/processed/
+
+# Ignore dynamically generated news file
+context/team_news.csv
+
+# Track the trained model (ignore other temp pickles if any)
 *.pkl
-data/raw/*.csv
+!models/classifier.pkl
+
+# Keep raw datasets because app.py needs them to calculate H2H and rankings at runtime!
+# If you don't track them, a fresh clone of this repo will crash.
 archive/
 src/__init__.py
-
