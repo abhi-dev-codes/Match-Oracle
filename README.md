@@ -1,11 +1,11 @@
-# <div align="center"> ⚽ Match Oracle: AI-Powered Football Predictor & Dynamic RAG Agent</div>
+# <div align="center"> ⚽ Match-Oracle: AI-Powered Football Predictor & Dynamic RAG Agent</div>
  
 ### <div align="center"> A Hybrid ML + Generative AI Pipeline for Context-Aware Predictions </div>
 
 ## <div align="center">![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white) ![Groq](https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logo=groq&logoColor=white) ![Llama 3](https://img.shields.io/badge/Llama_3-0466C8?style=for-the-badge&logo=meta&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white) ![FAISS](https://img.shields.io/badge/FAISS-00599C?style=for-the-badge&logo=meta&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)</div>
  
 
-Match Oracle is an advanced international football outcome predictor that bridges the gap between **Classical Machine Learning** and **Generative AI**. It uses a Logistic Regression model trained on 20+ years of FIFA data to establish baseline win/loss probabilities. Then, a dynamic **LangChain RAG (Retrieval-Augmented Generation) Pipeline** fetches real-time team news, embeds it using HuggingFace, and utilizes a **Groq Llama-3 LLM** as a reasoning agent to synthetically adjust those probabilities and generate a tactical preview.
+Match-Oracle is an advanced international football outcome predictor that bridges the gap between **Classical Machine Learning** and **Generative AI**. It uses a Logistic Regression model trained on 20+ years of FIFA data to establish baseline win/loss probabilities. Then, a dynamic **LangChain RAG (Retrieval-Augmented Generation) Pipeline** fetches real-time team news, embeds it using HuggingFace, and utilizes a **Groq Llama-3 LLM** as a reasoning agent to synthetically adjust those probabilities and generate a tactical preview.
 
 This repository serves as a comprehensive case study in **Prompt Engineering, Structured LLM Outputs, and Dynamic RAG architectures**, making it an ideal reference for Generative AI and Prompt Engineering applications.
  
@@ -79,7 +79,7 @@ You MUST respond ONLY with a valid JSON object matching this schema:
  
 ## System Architecture
  
-Match Oracle orchestrates two parallel pipelines that converge to form a single "Agentic" workflow.
+Match-Oracle orchestrates two parallel pipelines that converge to form a single "Agentic" workflow.
 
 ```mermaid
 flowchart TD

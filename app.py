@@ -4,7 +4,7 @@ from src.predictor import predict_outcome
 from src.rag_engine import generate_scout_report
 from src.utils import get_flag_url
 
-st.set_page_config(page_title="Match Oracle", page_icon="⚽", layout="centered")
+st.set_page_config(page_title="Match-Oracle", page_icon="⚽", layout="centered")
 
 # Custom CSS for the Google-like UI
 st.markdown("""
@@ -138,7 +138,7 @@ def set_bg_gif(gif_path):
 
 set_bg_gif("public/aidan-yelamos-berbel-footballnight.gif")
 
-st.title("⚽ Match Oracle")
+st.title("⚽ Match-Oracle")
 
 @st.cache_data
 def load_data():
