@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report
 import joblib
 
-FEATURES = ["points_diff", "neutral_venue"]
+FEATURES = ["points_diff", "neutral_venue", "h2h_home_win_rate", "h2h_match_count"]
 TARGET = "outcome"
 
 def train_and_save_model(data_path, model_output_path, scaler_output_path):

@@ -1,5 +1,6 @@
 # src/data_processor.py
 import pandas as pd
+from datetime import timedelta
 
 NAME_FIXES = {
     "Brunei": "Brunei Darussalam",
@@ -60,6 +61,67 @@ def load_and_merge(matches_path, rankings_path):
     return matches.dropna(subset=["home_rank", "away_rank", "home_points", "away_points"])
 
 
+def compute_h2h_features(df, window_years=4):
+    """Compute rolling H2H win rate and match count for each row.
+    """
+    df = df.sort_values("date").reset_index(drop=True)
+    window = timedelta(days=window_years * 365) 
+
+    # Create a canonical pair key so A-vs-B and B-vs-A are the same matchup
+    df["pair"] = df.apply(
+        lambda r: tuple(sorted([r["home_team"], r["away_team"]])), axis=1
+    )
+
+    h2h_win_rates = []  # home_win/total_matches
+    h2h_counts = []     # total_matches
+
+    # Group by pair for efficiency — only iterate within each matchup
+    for pair, group in df.groupby("pair"):
+        group = group.sort_values("date")
+        idxs = group.index.tolist()
+        dates = group["date"].values
+        home_teams = group["home_team"].values
+        home_scores = group["home_score"].values
+        away_scores = group["away_score"].values
+
+        for i, idx in enumerate(idxs):
+            current_date = dates[i]
+            cutoff = current_date - window
+            current_home = home_teams[i]
+
+            # Look at all prior matches in this pair within the window
+            wins = 0
+            total = 0
+            for j in range(i - 1, -1, -1):
+                if dates[j] < cutoff:
+                    break
+                total += 1
+                # Did the current home team win this prior match?
+                if home_teams[j] == current_home:
+                    # Same orientation: home team was home
+                    if home_scores[j] > away_scores[j]:
+                        wins += 1
+                else:
+                    # Flipped orientation: home team was away
+                    if away_scores[j] > home_scores[j]:
+                        wins += 1
+
+            if total > 0:
+                h2h_win_rates.append((idx, wins / total))
+                h2h_counts.append((idx, total))
+            else:
+                h2h_win_rates.append((idx, 0.5))   # neutral fallback
+                h2h_counts.append((idx, 0))
+
+    # Map results back to the dataframe
+    rate_map = dict(h2h_win_rates)
+    count_map = dict(h2h_counts)
+    df["h2h_home_win_rate"] = df.index.map(rate_map)
+    df["h2h_match_count"] = df.index.map(count_map)
+    df.drop(columns=["pair"], inplace=True)
+    return df
+
+
 def engineer_features(df):
     df["rank_diff"] = df["away_rank"] - df["home_rank"]
     df["points_diff"] = df["home_points"] - df["away_points"]
@@ -73,7 +135,12 @@ def engineer_features(df):
         return 0       # away win
 
     df["outcome"] = df.apply(outcome, axis=1)
-    return df[["home_team", "away_team", "rank_diff", "points_diff", "neutral_venue", "outcome"]]
+
+    # Compute H2H features (4-year rolling window)
+    df = compute_h2h_features(df, window_years=4)
+
+    return df[["home_team", "away_team", "rank_diff", "points_diff",
+               "neutral_venue", "h2h_home_win_rate", "h2h_match_count", "outcome"]]
 
 
 def process_football_data(matches_path, rankings_path, output_path):

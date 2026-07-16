@@ -144,7 +144,16 @@ st.title("⚽ Match-Oracle")
 def load_data():
     return pd.read_csv("data/raw/fifa_ranking.csv", parse_dates=["rank_date"])
 
+@st.cache_data
+def load_results():
+    from src.data_processor import NAME_FIXES
+    df = pd.read_csv("data/raw/results.csv", parse_dates=["date"])
+    df["home_team"] = df["home_team"].replace(NAME_FIXES)
+    df["away_team"] = df["away_team"].replace(NAME_FIXES)
+    return df
+
 rankings_df = load_data()
+results_df = load_results()
 teams = sorted(rankings_df["country_full"].unique())
 
 # Initialize session state for swapping
@@ -197,7 +206,7 @@ if st.button("Predict outcome", type="primary"):
     if home == away:
         st.error("Pick two different teams.")
     else:
-        probs = predict_outcome("models/classifier.pkl", rankings_df, home, away, neutral=int(is_neutral))
+        probs = predict_outcome("models/classifier.pkl", rankings_df, home, away, neutral=int(is_neutral), results_df=results_df)
         
         h_prob = int(round(probs['home_win']*100))
         d_prob = int(round(probs['draw']*100))
